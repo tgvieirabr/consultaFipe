@@ -28,6 +28,22 @@ const data = [
 
 
     },
+    {
+        "marca": "MERCEDES",
+        "modelo": "L-13-1300",
+        "ano": "1983"
+
+
+
+    },
+    {
+        "marca": "MERCEDES",
+        "modelo": "L-13-1300",
+        "ano": "1983"
+
+
+
+    },
 ];
 const headingColumnName = [
     "marca",
