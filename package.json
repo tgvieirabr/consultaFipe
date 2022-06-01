@@ -1,0 +1,24 @@
+{
+  "name": "consultafipe-main",
+  "version": "1.0.0",
+  "description": "Para rodar a aplicação basta executar no terminal",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tgvieirabr/consultaFipe.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tgvieirabr/consultaFipe/issues"
+  },
+  "homepage": "https://github.com/tgvieirabr/consultaFipe#readme",
+  "dependencies": {
+    "excel4node": "^1.7.2",
+    "uuid": "^8.3.2"
+  }
+}
