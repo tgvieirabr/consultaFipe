@@ -132,9 +132,12 @@ async function loadModelos() {
     });
 
     modelo.removeAttribute("disabled");
+    
+
+    
   } catch (err) {
     console.log("loadModelos error", err);
-  }
+      }
 }
 
 async function loadAnos() {
@@ -350,9 +353,9 @@ function renderChart(chartData) {
   const labelMonths = chartData.map((data) => data.label).reverse();
   const dataValues = chartData.map((data) => data.value).reverse();
   const color = "rgb(54, 162, 235)";
-  const colorHelper = Chart.helpers.color;
+  const colorHelper = chart.helpers.color;
 
-  chart = new Chart(grafico, {
+  chart = new chart(grafico, {
     type: "line",
     data: {
       labels: labelMonths,
