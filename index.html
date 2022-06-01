@@ -8,9 +8,9 @@
       content="Consultar preços médios de veículos diretamente na FIPE."
     />
     <meta name="theme-color" content="#000000" />
-    <link rel="manifest" href="./manifest.json" />
+    <link rel="manifest" href="/manifest.json" />
     <title>Preço de Veículo</title>
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="/styles.css" />
     <script
       defer
       src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"
@@ -19,7 +19,7 @@
       defer
       src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"
     ></script>
-    <script defer src="./app.js"></script>
+    <script defer src="/app.js"></script>
   </head>
 
   <body>
@@ -78,7 +78,7 @@
     <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
-          navigator.serviceWorker.register("./sw.js");
+          navigator.serviceWorker.register("/sw.js");
         });
       }
     </script>
