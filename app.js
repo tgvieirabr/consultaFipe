@@ -10,20 +10,23 @@ let referenciaHistorico = [];
 let chart = null;
 const btnGerarTabela = document.getElementById("btn-gerar-tabela");
 
-btnGerarTabela.addEventListener("click", async () => {
-  const tabela = [];
-const marcas =  await loadMarcas();
-//console.log (marcas)
-marcas.forEach((marca) => {
-  tabela.push( {
-    marca: marca.Label,
-    
-  });
-  
-});
-console.log (tabela)
-});
+/*newFunction();
 
+
+function newFunction() {
+  btnGerarTabela.addEventListener("click", async () => {
+    const tabela = [];
+    const marcas = await loadMarcas();
+    //console.log (marcas)
+    marcas.forEach((marca) => {
+      tabela.push({
+        marca: marca.Label,
+      });
+
+    });
+    console.log(tabela);
+  });
+}*/
 
 function generateLabelMonth(string) {
   return string.charAt(0).toUpperCase() + string.slice(1).substring(0, 2);
