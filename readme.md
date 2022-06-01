@@ -11,5 +11,9 @@ npm install
 Pronto, agora acesse http://localhost:3000
 
 
+## Deploy
+https://tgvieirabr.github.io/consultaFipe/
+Em desenvolvimento
+
 
 
