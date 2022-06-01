@@ -8,6 +8,22 @@ const consultar = document.getElementById("search");
 const resultado = document.getElementById("resultado");
 let referenciaHistorico = [];
 let chart = null;
+const btnGerarTabela = document.getElementById("btn-gerar-tabela");
+
+btnGerarTabela.addEventListener("click", async () => {
+  const tabela = [];
+const marcas =  await loadMarcas();
+//console.log (marcas)
+marcas.forEach((marca) => {
+  tabela.push( {
+    marca: marca.Label,
+    
+  });
+  
+});
+console.log (tabela)
+});
+
 
 function generateLabelMonth(string) {
   return string.charAt(0).toUpperCase() + string.slice(1).substring(0, 2);
@@ -90,6 +106,7 @@ async function loadMarcas() {
     });
 
     marca.removeAttribute("disabled");
+    return data;
   } catch (err) {
     console.log("loadMarcas error", err);
   }
@@ -420,6 +437,7 @@ referencia.addEventListener("change", (event) => {
 tipoVeiculo.addEventListener("change", (event) => {
   if (event.target.value !== "") {
     loadMarcas();
+    btnGerarTabela.removeAttribute("disabled");
   }
 
   marca.setAttribute("disabled", true);
