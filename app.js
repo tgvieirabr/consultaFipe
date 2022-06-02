@@ -10,23 +10,38 @@ let referenciaHistorico = [];
 let chart = null;
 const btnGerarTabela = document.getElementById("btn-gerar-tabela");
 
-/*newFunction();
-
-
-function newFunction() {
-  btnGerarTabela.addEventListener("click", async () => {
-    const tabela = [];
-    const marcas = await loadMarcas();
-    //console.log (marcas)
-    marcas.forEach((marca) => {
-      tabela.push({
-        marca: marca.Label,
-      });
-
-    });
-    console.log(tabela);
+function sleep(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
   });
-}*/
+}
+
+btnGerarTabela.addEventListener("click", async () => {
+  const tabela = [];
+  const marcas = await loadMarcas();
+
+  // vamos ver se assim vai tudo
+
+  const requests = marcas.map(async (marca) => {
+    await sleep(1000); // entre uma marca e outra vou dar 1 segundo
+    const modelos = await loadModelosByMarca(marca.Value);
+    tabela.push({
+      marca: marca.Label,
+      modelos: Array.isArray(modelos) ? await Promise.all(modelos.map(async (modelo) => {
+        await sleep(500); // entre um modelo e outro vou deixar metade 
+        const anos = await loadAnosByMarcaAndModelo(marca.Value, modelo.Value);
+        return {
+          descricao: modelo.Label,
+          anos: Array.isArray(anos) ? anos.map(ano => ano.Label) : [],
+        }
+      })) : []
+    });
+  });
+
+  await Promise.all(requests);
+
+  // -> salvar essa variavel tabela no mongo, sql ou em arq
+});
 
 function generateLabelMonth(string) {
   return string.charAt(0).toUpperCase() + string.slice(1).substring(0, 2);
@@ -115,6 +130,24 @@ async function loadMarcas() {
   }
 }
 
+async function loadModelosByMarca(codigoMarca) {
+  try {
+    const form = new FormData();
+    form.append("codigoTabelaReferencia", parseInt(referencia.value, 10));
+    form.append("codigoTipoVeiculo", parseInt(tipoVeiculo.value, 10));
+    form.append("codigoMarca", parseInt(codigoMarca, 10));
+
+    const {
+      data: { Modelos: data },
+    } = await axios.post(`${fipeAPI}/ConsultarModelos`, form);
+
+    return data;
+
+  } catch (err) {
+    console.log("loadModelosByMarca error", err);
+  }
+}
+
 async function loadModelos() {
   try {
     const form = new FormData();
@@ -135,12 +168,29 @@ async function loadModelos() {
     });
 
     modelo.removeAttribute("disabled");
-    
 
-    
+
+
   } catch (err) {
     console.log("loadModelos error", err);
-      }
+  }
+}
+
+async function loadAnosByMarcaAndModelo(codigoMarca, codigoModelo) {
+  try {
+    const form = new FormData();
+    form.append("codigoTabelaReferencia", parseInt(referencia.value, 10));
+    form.append("codigoTipoVeiculo", parseInt(tipoVeiculo.value, 10));
+    form.append("codigoMarca", parseInt(codigoMarca, 10));
+    form.append("codigoModelo", parseInt(codigoModelo, 10));
+
+    const { data } = await axios.post(`${fipeAPI}/ConsultarAnoModelo`, form);
+
+    return data;
+
+  } catch (err) {
+    console.log("loadAnosByMarcaAndModelo error", err);
+  }
 }
 
 async function loadAnos() {
@@ -248,18 +298,17 @@ function renderVeiculo(data) {
         </tr>
       </tbody>
     </table>
-    ${
-      referenciaHistorico &&
-      `
+    ${referenciaHistorico &&
+    `
         <br>
         <select id="historico">
           <option value="">Escolha o ano para exibir a variação de preço.</option>
           ${referenciaHistorico
-            .map(
-              (referencia) =>
-                `<option value="${referencia.year}">${referencia.year}</option>`
-            )
-            .join("")}
+      .map(
+        (referencia) =>
+          `<option value="${referencia.year}">${referencia.year}</option>`
+      )
+      .join("")}
         </select>
         <canvas id="grafico" style="display: none; width: 100%"></canvas>
       `
