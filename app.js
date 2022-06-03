@@ -23,12 +23,12 @@ btnGerarTabela.addEventListener("click", async () => {
   
 
   const requests = marcas.map(async (marca) => {
-    await sleep(5000); // entre uma marca e outra vou dar 1 segundo
+    await sleep(50000); // entre uma marca e outra vou dar 1 segundo
     const modelos = await loadModelosByMarca(marca.Value);
     tabela.push({
       marca: marca.Label,
       modelos: Array.isArray(modelos) ? await Promise.all(modelos.map(async (modelo) => {
-        await sleep(4000); // entre uma marca e outra vou dar 1 segundo
+        await sleep(30000); // entre um modelo e outraovou dar 1 segundo
         const anos = await loadAnosByMarcaAndModelo(marca.Value, modelo.Value);
         return {
           descricao: modelo.Label,
@@ -40,12 +40,8 @@ btnGerarTabela.addEventListener("click", async () => {
 
   await Promise.all(requests);
 
-  //console.table(tabela);
-  const list = [tabela]
-
- const jsonList = JSON.stringify(list)
-
-console.table(jsonList) 
+  console.log(tabela);
+ 
 });
 
 function generateLabelMonth(string) {
@@ -560,3 +556,5 @@ consultar.addEventListener("click", () => {
 document.addEventListener("DOMContentLoaded", () => {
   loadReferencia();
 });
+
+

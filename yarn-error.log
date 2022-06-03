@@ -1,0 +1,64 @@
+Arguments: 
+  /home/gso/.nvm/versions/node/v14.17.5/bin/node /home/gso/.nvm/versions/node/v14.17.5/bin/yarn add mongoogse
+
+PATH: 
+  /home/gso/.local/bin:/home/gso/.nvm/versions/node/v14.17.5/bin:/home/gso/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+
+Yarn version: 
+  1.22.18
+
+Node version: 
+  14.17.5
+
+Platform: 
+  linux x64
+
+Trace: 
+  Error: https://registry.yarnpkg.com/mongoogse: Not found
+      at Request.params.callback [as _callback] (/home/gso/.nvm/versions/node/v14.17.5/lib/node_modules/yarn/lib/cli.js:66138:18)
+      at Request.self.callback (/home/gso/.nvm/versions/node/v14.17.5/lib/node_modules/yarn/lib/cli.js:140883:22)
+      at Request.emit (events.js:400:28)
+      at Request.<anonymous> (/home/gso/.nvm/versions/node/v14.17.5/lib/node_modules/yarn/lib/cli.js:141855:10)
+      at Request.emit (events.js:400:28)
+      at IncomingMessage.<anonymous> (/home/gso/.nvm/versions/node/v14.17.5/lib/node_modules/yarn/lib/cli.js:141777:12)
+      at Object.onceWrapper (events.js:519:28)
+      at IncomingMessage.emit (events.js:412:35)
+      at endReadableNT (internal/streams/readable.js:1317:12)
+      at processTicksAndRejections (internal/process/task_queues.js:82:21)
+
+npm manifest: 
+  {
+    "name": "consultafipe-main",
+    "version": "1.0.0",
+    "description": "Para rodar a aplicação basta executar no terminal",
+    "main": "app.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/tgvieirabr/consultaFipe.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+      "url": "https://github.com/tgvieirabr/consultaFipe/issues"
+    },
+    "homepage": "https://github.com/tgvieirabr/consultaFipe#readme",
+    "dependencies": {
+      "dotenv": "^16.0.1",
+      "excel4node": "^1.7.2",
+      "mongodb": "^4.6.0",
+      "mongoose": "^6.3.5",
+      "objects-to-csv": "^1.3.6",
+      "typescript": "^4.7.2",
+      "uuid": "^8.3.2"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

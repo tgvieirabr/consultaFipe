@@ -1,69 +1,17 @@
-const xl = require('excel4node');
-const wb = new xl.Workbook();
-const ws = wb.addWorksheet('mmv');
+require("dotenv").config();
+const express = require('express');
+const mongoose = require('mongoose');
+const routes = require('./routes');
+const connectToDatabase = require('./database');
 
-const data = [
-
-    {
-        "marca": "MERCEDES",
-        "modelo": "L-13-130",
-        "ano": "1981"
+connectToDatabase();
 
 
+const app = express();
+const port = 3333;
 
-    },
-    {
-        "marca": "MERCEDES",
-        "modelo": "L-13-1300",
-        "ano": "1982"
+app.use(routes);
 
-
-
-    },
-    {
-        "marca": "MERCEDES",
-        "modelo": "L-13-1300",
-        "ano": "1983"
-
-
-
-    },
-    {
-        "marca": "MERCEDES",
-        "modelo": "L-13-1300",
-        "ano": "1983"
-
-
-
-    },
-    {
-        "marca": "MERCEDES",
-        "modelo": "L-13-1300",
-        "ano": "1983"
-
-
-
-    },
-];
-const headingColumnName = [
-    "marca",
-    "modelo",
-    "ano"
-];
-
-let headingColumnIndex = 1;
-headingColumnName.forEach(heading => {
-    ws.cell(1, headingColumnIndex++).string(heading);
-
-
-}
-);
-let rowIndex = 2; // começa inserir na linha 2 da tabela 2
-data.forEach(record => {
-    let columnIndex = 1;
-    Object.keys(record).forEach(headingColumnName => {
-        ws.cell(rowIndex, columnIndex++).string(record[headingColumnName]);
-    });
-    rowIndex++;
+app.listen(port, () => {
+console.log(`Server running on http://localhost:${port}`);
 });
-wb.write('mmv.xlsx');
