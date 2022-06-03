@@ -20,15 +20,15 @@ btnGerarTabela.addEventListener("click", async () => {
   const tabela = [];
   const marcas = await loadMarcas();
 
-  // vamos ver se assim vai tudo
+  
 
   const requests = marcas.map(async (marca) => {
-    await sleep(1000); // entre uma marca e outra vou dar 1 segundo
+    await sleep(5000); // entre uma marca e outra vou dar 1 segundo
     const modelos = await loadModelosByMarca(marca.Value);
     tabela.push({
       marca: marca.Label,
       modelos: Array.isArray(modelos) ? await Promise.all(modelos.map(async (modelo) => {
-        await sleep(500); // entre um modelo e outro vou deixar metade 
+        await sleep(4000); // entre uma marca e outra vou dar 1 segundo
         const anos = await loadAnosByMarcaAndModelo(marca.Value, modelo.Value);
         return {
           descricao: modelo.Label,
@@ -40,7 +40,12 @@ btnGerarTabela.addEventListener("click", async () => {
 
   await Promise.all(requests);
 
-  // -> salvar essa variavel tabela no mongo, sql ou em arq
+  //console.table(tabela);
+  const list = [tabela]
+
+ const jsonList = JSON.stringify(list)
+
+console.table(jsonList) 
 });
 
 function generateLabelMonth(string) {
