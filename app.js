@@ -10,6 +10,7 @@ let referenciaHistorico = [];
 let chart = null;
 const btnGerarTabela = document.getElementById("btn-gerar-tabela");
 
+
 function sleep(ms) {
   return new Promise((resolve) => {
     setTimeout(resolve, ms);
@@ -23,12 +24,12 @@ btnGerarTabela.addEventListener("click", async () => {
   
 
   const requests = marcas.map(async (marca) => {
-    await sleep(50000); // entre uma marca e outra vou dar 1 segundo
+    await sleep(2000); // entre uma marca e outra vou dar 1 segundo
     const modelos = await loadModelosByMarca(marca.Value);
     tabela.push({
       marca: marca.Label,
       modelos: Array.isArray(modelos) ? await Promise.all(modelos.map(async (modelo) => {
-        await sleep(30000); // entre um modelo e outraovou dar 1 segundo
+        await sleep(1000); // entre um modelo e outraovou dar 1 segundo
         const anos = await loadAnosByMarcaAndModelo(marca.Value, modelo.Value);
         return {
           descricao: modelo.Label,
@@ -40,8 +41,22 @@ btnGerarTabela.addEventListener("click", async () => {
 
   await Promise.all(requests);
 
-  console.log(tabela);
- 
+  const json = JSON.stringify(tabela);
+  console.log(json);
+
+
+    $.ajax({
+      url: 'http://localhost:3333/generate',
+      contentType: 'application/json',
+      cache: false,
+      method: 'POST',
+      dataType: 'json',
+      data: json,
+      success: function(data) {
+          console.log(data);
+      }
+  });
+
 });
 
 function generateLabelMonth(string) {
