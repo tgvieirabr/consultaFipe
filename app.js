@@ -24,7 +24,7 @@ btnGerarTabela.addEventListener("click", async () => {
   
 
   const requests = marcas.map(async (marca) => {
-    await sleep(2000); // entre uma marca e outra vou dar 1 segundo
+    await sleep(2000); // entre uma marca e outra vou dar 2 segundo
     const modelos = await loadModelosByMarca(marca.Value);
     tabela.push({
       marca: marca.Label,
