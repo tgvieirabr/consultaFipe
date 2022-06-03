@@ -24,12 +24,12 @@ btnGerarTabela.addEventListener("click", async () => {
   
 
   const requests = marcas.map(async (marca) => {
-    await sleep(2000); // entre uma marca e outra vou dar 2 segundo
+    await sleep(3000); // entre uma marca e outra vou dar 2 segundo
     const modelos = await loadModelosByMarca(marca.Value);
     tabela.push({
       marca: marca.Label,
       modelos: Array.isArray(modelos) ? await Promise.all(modelos.map(async (modelo) => {
-        await sleep(1000); // entre um modelo e outraovou dar 1 segundo
+        await sleep(2000); // entre um modelo e outraovou dar 1 segundo
         const anos = await loadAnosByMarcaAndModelo(marca.Value, modelo.Value);
         return {
           descricao: modelo.Label,

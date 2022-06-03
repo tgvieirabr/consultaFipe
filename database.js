@@ -1,19 +1,17 @@
-const mongoose = require('mongoose');
-const { ModuleResolutionKind } = require('typescript');
+const mongoose = require('mongoose')
+require('dotenv').config({ path: '.env' })
 
-function connectToDatabase () {
-
-mongoose.connect (
-    process.env.DATABASE_URL,
-    {
-        userNewUrlParser: true,
-        useUnifiedTopology: true,
+const connectDB = async () => {
+    try {
+        await mongoose.connect(process.env.DATABASE_URL, {
+            maxPoolSize: 50,
+            wtimeoutMS: 2500,
+            useNewUrlParser: true
+        })
+        console.log('DB connected ')
+    } catch (err) {
+        console.log(err)
+        process.exit(1)
     }
-);
-const db = mongoose.connection;
-db.on("error",(error)=> console.error(error));
-db.once("open",()=> console.log("Connected to MongoDB"));
-
-} 
-
-module.exports = connectToDatabase;
+}
+module.exports = connectDB;
