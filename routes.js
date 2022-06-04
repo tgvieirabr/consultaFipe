@@ -17,14 +17,14 @@ routes.post('/generate', async (req, res, next) => {
             
         });
 
-        item.modelos.forEach((modelo) => {
+       item.modelos.forEach((modelo) => {
            // console.log(modelo);
             tabela.push({
                 modelo: item.modelo,
 
             });
             modelo.anos.forEach((ano) => {
-                //aqui tu pega info do ano
+                //
                // console.log(ano)
                 tabela.push({
                     ano: ano.ano,
@@ -37,14 +37,7 @@ routes.post('/generate', async (req, res, next) => {
 
     });
 
-
-
-
-
-
-
-
-    const data = [
+  const data = [
         { marca: 'CA', modelo: 'California', versao: 'California', ano: 'California' },
         { marca: 'CA', modelo: 'California', versao: 'California', ano: 'California' },
         { marca: 'CA', modelo: 'California', versao: 'California', ano: 'California' },

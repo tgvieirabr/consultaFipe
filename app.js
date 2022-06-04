@@ -10,7 +10,6 @@ let referenciaHistorico = [];
 let chart = null;
 const btnGerarTabela = document.getElementById("btn-gerar-tabela");
 
-
 function sleep(ms) {
   return new Promise((resolve) => {
     setTimeout(resolve, ms);
@@ -19,44 +18,33 @@ function sleep(ms) {
 
 btnGerarTabela.addEventListener("click", async () => {
   const tabela = [];
+
   const marcas = await loadMarcas();
 
-  
-
-  const requests = marcas.map(async (marca) => {
-    await sleep(3000); // entre uma marca e outra vou dar 2 segundo
+  for (const marca of marcas) {
+    //await sleep(300); // entre uma marca e outra vou dar 2 segundo
     const modelos = await loadModelosByMarca(marca.Value);
-    tabela.push({
-      marca: marca.Label,
-      modelos: Array.isArray(modelos) ? await Promise.all(modelos.map(async (modelo) => {
-        await sleep(2000); // entre um modelo e outraovou dar 1 segundo
-        const anos = await loadAnosByMarcaAndModelo(marca.Value, modelo.Value);
-        return {
-          descricao: modelo.Label,
-          anos: Array.isArray(anos) ? anos.map(ano => ano.Label) : [],
-        }
-      })) : []
-    });
-  });
-
-  await Promise.all(requests);
-
-  const json = JSON.stringify(tabela);
-  console.log(json);
-
-
-    $.ajax({
-      url: 'http://localhost:3333/generate',
-      contentType: 'application/json',
-      cache: false,
-      method: 'POST',
-      dataType: 'json',
-      data: json,
-      success: function(data) {
-          console.log(data);
+    for (const modelo of modelos) {
+      //await sleep(300); // entre um modelo e outraovou dar 1 segundo
+      const anos = await loadAnosByMarcaAndModelo(marca.Value, modelo.Value);
+      if (Array.isArray(anos)) {
+        anos.forEach(ano => {
+          tabela.push({
+            marca: marca.Label,
+            modelo: modelo.Label,
+            ano: ano.Label
+          })
+        })
       }
-  });
+    }
+  }
 
+  const worksheet = XLSX.utils.json_to_sheet(tabela);
+
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "FIPE");
+
+  XLSX.writeFile(workbook, "fipe.xlsx");
 });
 
 function generateLabelMonth(string) {
